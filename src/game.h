@@ -14,9 +14,11 @@ class Game {
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
+  Snake snake;  // pause-game
+  void PauseGame();  // pause-game
 
  private:
-  Snake snake;
+  // Snake snake;
   SDL_Point food;
 
   std::random_device dev;
@@ -28,6 +30,9 @@ class Game {
 
   void PlaceFood();
   void Update();
+
+  // Added:
+  bool _paused{false};  // pause-game
 };
 
 #endif
