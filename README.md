@@ -74,3 +74,8 @@ Involved code changes:<br>
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
 |The project makes use of references in function declarations.|At least two variables are defined as references, or two functions use pass-by-reference in the project code.|1. In `void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite)`, the `player_nr` is passed as an r-value reference.|
+
+### Concurrency - meet at least 2 criteria
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+|The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| In `Game::Run` a thread is started to collect the keyboard input from the second player|
