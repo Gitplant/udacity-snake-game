@@ -51,3 +51,8 @@ Involved code changes:<br>
     *  A new function `void ChangeDirection(Snake::Direction input, Snake::Direction opposite)` is added to the `Snake` class.
     *  The method `Game::PauseGame()` sets the attribute `_paused` to either `true` or `false`.
     *  `Game::Run` won't call `Update()` if `_paused` is false.
+2. **Two-player mode** Optionally play the game with two players. <br>
+Involved code changes:<br>
+    * Get the number of players from the user:<br>
+      a. The function `GetNrPlayers()` is defined in main, which asks the user to enter the number of players and returns an `int` accordingly.<br>
+      b. Inside `main()`, the `nr_players` is set.
