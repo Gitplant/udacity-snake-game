@@ -1,5 +1,7 @@
 #include "game.h"
+#include "controller.h" // concurrency
 #include <iostream>
+#include <thread>  // concurrency
 #include "SDL.h"
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
@@ -29,6 +31,16 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     // controller.HandleInput(running, snake);
     controller.HandleInput(running, this);  // pause-game
+
+    // Allow both players to give input at the same time
+    if (_nr_players == 2){  // concurrency
+      // Use multi-threading
+      // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
+      std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
+      std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
+      std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
+      t.join();  // concurrency
+    }  // concurrency
     if (!_paused){  // pause-game
     Update();
     }  // pause-game

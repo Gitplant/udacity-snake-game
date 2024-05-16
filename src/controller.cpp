@@ -79,3 +79,32 @@ void Controller::HandleInput(bool &running, Game* game) const {
     }
   }
 }
+
+// Concurrency
+void Controller::HandleInputPlayer2(bool &running, Game* game) const {
+  SDL_Event e;
+  while (SDL_PollEvent(&e)) {
+    if (e.type == SDL_QUIT) {
+      running = false;
+    } else if (e.type == SDL_KEYDOWN) {
+        switch (e.key.keysym.sym) {
+        // PLAYER 2 uses WASD
+        case SDLK_w:
+          game->ChangeSnakeDirection(2, Snake::Direction::kUp, Snake::Direction::kDown);  // two-player
+          break;
+
+        case SDLK_s:
+          game->ChangeSnakeDirection(2, Snake::Direction::kDown, Snake::Direction::kUp);  // two-player
+          break;
+
+        case SDLK_a:
+          game->ChangeSnakeDirection(2, Snake::Direction::kLeft, Snake::Direction::kRight);  // two-player
+          break;
+
+        case SDLK_d:
+          game->ChangeSnakeDirection(2, Snake::Direction::kRight, Snake::Direction::kLeft);  // two-player
+          break;
+      }
+    }
+  }
+}

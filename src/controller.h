@@ -9,6 +9,7 @@ class Controller {
  public:
 //   void HandleInput(bool &running, Snake &snake) const;
 void HandleInput(bool &running, Game* game) const;  // pause-game
+void HandleInputPlayer2(bool &running, Game* game) const;  // concurrency
 
  private:
   void ChangeDirection(Snake &snake, Snake::Direction input,
