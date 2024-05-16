@@ -4,7 +4,8 @@
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
 Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
-    : snake(grid_width, grid_height),
+    // : snake(grid_width, grid_height),
+    : snake(grid_width, grid_height, grid_width / 2),  // two-player
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)),
@@ -31,7 +32,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     if (!_paused){  // pause-game
     Update();
     }  // pause-game
-    renderer.Render(snake, food);
+    // renderer.Render(snake, food);
+    renderer.Render(_snakes, food);  // two-player
 
     frame_end = SDL_GetTicks();
 
@@ -93,7 +95,8 @@ int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
 
 // pause-game
-void Game::ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite) {
+void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite) {
+  snake = _snakes[player_nr - 1];
   snake.ChangeDirection(input, opposite);
   return;
 }
@@ -112,7 +115,8 @@ void Game::PauseGame(){
 void Game::SetSnakes(int grid_width, int grid_height){
   for (int i = 0; i < _nr_players; i++)
   {
-    Snake snake(grid_width, grid_height);
+    float head_x = grid_width * (i+1) / (_nr_players + 1);
+    Snake snake(grid_width, grid_height, head_x);
     _snakes.push_back(snake);
   }
 }

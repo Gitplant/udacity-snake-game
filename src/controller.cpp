@@ -19,28 +19,33 @@ void Controller::HandleInput(bool &running, Game* game) const {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
+        // PLAYER 1 uses arrows
         case SDLK_UP:
           // ChangeDirection(snake, Snake::Direction::kUp,
           //                 Snake::Direction::kDown);
-          game->ChangeSnakeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game
+          // game->ChangeSnakeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game
+          game->ChangeSnakeDirection(1, Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game, two-player
           break;
 
         case SDLK_DOWN:
           // ChangeDirection(snake, Snake::Direction::kDown,
           //                 Snake::Direction::kUp);
-          game->ChangeSnakeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game
+          // game->ChangeSnakeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game
+          game->ChangeSnakeDirection(1, Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game, two-player
           break;
 
         case SDLK_LEFT:
           // ChangeDirection(snake, Snake::Direction::kLeft,
           //                 Snake::Direction::kRight);
-          game->ChangeSnakeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game
+          // game->ChangeSnakeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game
+          game->ChangeSnakeDirection(1, Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game, two-player
           break;
 
         case SDLK_RIGHT:
           // ChangeDirection(snake, Snake::Direction::kRight,
           //                 Snake::Direction::kLeft);
-          game->ChangeSnakeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game
+          // game->ChangeSnakeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game
+          game->ChangeSnakeDirection(1, Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game, two-player
           break;
         case SDLK_SPACE:
           game->PauseGame();

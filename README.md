@@ -63,3 +63,8 @@ Involved code changes:<br>
 |--------|---------------|
 |The project accepts user input and processes the input.| 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
 |The project uses data structures and immutable variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
+
+### Memory Management - meet at least 3 criteria
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+|The project makes use of references in function declarations.|At least two variables are defined as references, or two functions use pass-by-reference in the project code.|1. In `void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite)`, the `player_nr` is passed as an r-value reference.|

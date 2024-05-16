@@ -15,7 +15,8 @@ class Game {
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
-  void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
+  // void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
+  void ChangeSnakeDirection(int&& snake_nr, Snake::Direction input, Snake::Direction opposite);  // pause-game, two-player
   void PauseGame();  // pause-game
   void SetSnakes(int grid_width, int grid_height);  // two-player
 
