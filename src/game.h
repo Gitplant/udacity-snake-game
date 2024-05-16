@@ -14,7 +14,7 @@ class Game {
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
-  int GetSize() const;
+  // int GetSize() const;
   // void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void ChangeSnakeDirection(int&& snake_nr, Snake::Direction input, Snake::Direction opposite);  // pause-game, two-player
   void PauseGame();  // pause-game
@@ -22,7 +22,7 @@ class Game {
   int GetNrPlayers() const;  // two-player
 
  private:
-  Snake snake;
+  // Snake snake;
   SDL_Point food;
 
   std::random_device dev;

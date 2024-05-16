@@ -7,8 +7,8 @@
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
 Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
     // : snake(grid_width, grid_height),
-    : snake(grid_width, grid_height, grid_width / 2),  // two-player
-      engine(dev()),
+    // : snake(grid_width, grid_height, grid_width / 2),  // two-player
+      : engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)),
       _nr_players(nr_players) {  // two-player
@@ -72,15 +72,23 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
 void Game::PlaceFood() {
   int x, y;
+  bool _empty_spot;  // two-player
   while (true) {
+    _empty_spot = true;  // two-player
     x = random_w(engine);
     y = random_h(engine);
     // Check that the location is not occupied by a snake item before placing
     // food.
-    if (!snake.SnakeCell(x, y)) {
-      food.x = x;
-      food.y = y;
-      return;
+    for (Snake& snake : _snakes){  // two-player
+      // if (!snake.SnakeCell(x, y)) {
+      if (snake.SnakeCell(x, y)) {
+        _empty_spot = false;
+        }
+    }
+    if (_empty_spot){
+        food.x = x;
+        food.y = y;
+        return;
     }
   }
 }
@@ -106,7 +114,7 @@ void Game::Update() {
 }
 
 int Game::GetScore() const { return score; }
-int Game::GetSize() const { return snake.size; }
+// int Game::GetSize() const { return snake.size; }
 
 // pause-game
 void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite) {
