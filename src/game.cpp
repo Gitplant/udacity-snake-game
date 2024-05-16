@@ -121,3 +121,7 @@ void Game::SetSnakes(int grid_width, int grid_height){
     _snakes.push_back(snake);
   }
 }
+
+int Game::GetNrPlayers() const {  // two-player
+  return _nr_players;
+}  // two-player

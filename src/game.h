@@ -19,6 +19,7 @@ class Game {
   void ChangeSnakeDirection(int&& snake_nr, Snake::Direction input, Snake::Direction opposite);  // pause-game, two-player
   void PauseGame();  // pause-game
   void SetSnakes(int grid_width, int grid_height);  // two-player
+  int GetNrPlayers() const;  // two-player
 
  private:
   Snake snake;

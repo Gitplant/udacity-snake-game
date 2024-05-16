@@ -56,6 +56,12 @@ Involved code changes:<br>
     * Get the number of players from the user:<br>
       a. The function `GetNrPlayers()` is defined in main, which asks the user to enter the number of players and returns an `int` accordingly.<br>
       b. Inside `main()`, the `nr_players` is set.
+    * The `Game` constructor also takes and sets the number of players.
+    * A getter for `_nr_players` (`GetNrPlayers()`) is defined in the `Game` class.
+    * Inside `Controller::HandleInput`, the direction of the second snake is updated using the WASD keys.
+    * A `SetSnakes` method is created inside `Game` that will initialize a vector of snakes called `_snakes`. In case of two snakes, their start positions are on 1/3 and 2/3 of the width of the screen, so that they won't overlap.
+    * In `Game::Run` all snakes are rendered and updated.
+    * A helper function for printing the snake's direction (`Snake::PrintDirection`) was introduced.
 
 ## Rubric criteria that were met
 ### Loops, Functions, I/O - meet at least 2 criteria
