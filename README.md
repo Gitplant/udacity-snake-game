@@ -62,3 +62,4 @@ Involved code changes:<br>
 |Criteria| Implementation|
 |--------|---------------|
 |The project accepts user input and processes the input.| 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
+|The project uses data structures and immutable variables.|The attribute `_nr_players` of class `Game` is defined as a const.|

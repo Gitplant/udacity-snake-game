@@ -9,7 +9,8 @@
 
 class Game {
  public:
-  Game(std::size_t grid_width, std::size_t grid_height);
+  // Game(std::size_t grid_width, std::size_t grid_height);
+  Game(std::size_t grid_width, std::size_t grid_height, int nr_players);  // two-player
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
@@ -33,6 +34,7 @@ class Game {
 
   // Added:
   bool _paused{false};  // pause-game
+  int const _nr_players; // two-player
 };
 
 #endif
