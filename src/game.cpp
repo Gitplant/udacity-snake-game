@@ -10,6 +10,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // 
       random_h(0, static_cast<int>(grid_height - 1)),
       _nr_players(nr_players) {  // two-player
   PlaceFood();
+  SetSnakes(grid_width, grid_height);
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -104,5 +105,14 @@ void Game::PauseGame(){
   }
   else{
     _paused = true;
+  }
+}
+
+// two-player
+void Game::SetSnakes(int grid_width, int grid_height){
+  for (int i = 0; i < _nr_players; i++)
+  {
+    Snake snake(grid_width, grid_height);
+    _snakes.push_back(snake);
   }
 }

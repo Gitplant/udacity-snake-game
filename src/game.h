@@ -17,6 +17,7 @@ class Game {
   int GetSize() const;
   void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void PauseGame();  // pause-game
+  void SetSnakes(int grid_width, int grid_height);  // two-player
 
  private:
   Snake snake;
@@ -35,6 +36,7 @@ class Game {
   // Added:
   bool _paused{false};  // pause-game
   int const _nr_players; // two-player
+  std::vector<Snake> _snakes;  //two-player
 };
 
 #endif
