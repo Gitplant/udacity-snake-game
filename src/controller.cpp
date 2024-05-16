@@ -4,11 +4,12 @@
 #include "snake.h"
 #include "game.h" // pause-game
 
-void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
-                                 Snake::Direction opposite) const {
-  if (snake.direction != opposite || snake.size == 1) snake.direction = input;
-  return;
-}
+// comment for pause-game
+// void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
+//                                  Snake::Direction opposite) const {
+//   if (snake.direction != opposite || snake.size == 1) snake.direction = input;
+//   return;
+// }
 
 // void Controller::HandleInput(bool &running, Snake &snake) const {
 void Controller::HandleInput(bool &running, Game* game) const {
@@ -21,23 +22,25 @@ void Controller::HandleInput(bool &running, Game* game) const {
         case SDLK_UP:
           // ChangeDirection(snake, Snake::Direction::kUp,
           //                 Snake::Direction::kDown);
-          ChangeDirection(game->snake, Snake::Direction::kUp,
-                Snake::Direction::kDown);
+          game->ChangeSnakeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game
           break;
 
         case SDLK_DOWN:
-          ChangeDirection(game->snake, Snake::Direction::kDown,
-                          Snake::Direction::kUp);
+          // ChangeDirection(snake, Snake::Direction::kDown,
+          //                 Snake::Direction::kUp);
+          game->ChangeSnakeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game
           break;
 
         case SDLK_LEFT:
-          ChangeDirection(game->snake, Snake::Direction::kLeft,
-                          Snake::Direction::kRight);
+          // ChangeDirection(snake, Snake::Direction::kLeft,
+          //                 Snake::Direction::kRight);
+          game->ChangeSnakeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game
           break;
 
         case SDLK_RIGHT:
-          ChangeDirection(game->snake, Snake::Direction::kRight,
-                          Snake::Direction::kLeft);
+          // ChangeDirection(snake, Snake::Direction::kRight,
+          //                 Snake::Direction::kLeft);
+          game->ChangeSnakeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game
           break;
         case SDLK_SPACE:
           game->PauseGame();

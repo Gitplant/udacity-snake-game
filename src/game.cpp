@@ -89,6 +89,12 @@ void Game::Update() {
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
 
+// pause-game
+void Game::ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite) {
+  if (snake.direction != opposite || snake.size == 1) snake.direction = input;
+  return;
+}
+
 
 // pause-game
 void Game::PauseGame(){
