@@ -1,5 +1,6 @@
 #include "game.h"
 #include "controller.h" // concurrency
+#include "player.h"  // player-class
 #include <iostream>
 #include <thread>  // concurrency
 #include "SDL.h"
@@ -14,6 +15,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // 
       _nr_players(nr_players) {  // two-player
   PlaceFood();
   SetSnakes(grid_width, grid_height);
+  SetPlayers(grid_width, grid_height);
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -37,8 +39,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       // Use multi-threading
       // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
       std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
-      std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
-      std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
+      // std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
+      // std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
       t.join();  // concurrency
     }  // concurrency
     if (!_paused){  // pause-game
@@ -145,3 +147,16 @@ void Game::SetSnakes(int grid_width, int grid_height){
 int Game::GetNrPlayers() const {  // two-player
   return _nr_players;
 }  // two-player
+
+// player-class
+void Game::SetPlayers(int grid_width, int grid_height){
+  for (int i = 0; i < _nr_players; i++)
+  {
+    float head_x = grid_width * (i+1) / (_nr_players + 1);
+    Snake snake(grid_width, grid_height, head_x);
+    Controller controller;
+    Player player(i+1, snake, controller);
+    // Player player(i+1);
+    _players.push_back(player);
+  }
+}

@@ -4,6 +4,7 @@
 #include <random>
 #include "SDL.h"
 #include "controller.h"
+#include "player.h"  // player-class
 #include "renderer.h"
 #include "snake.h"
 
@@ -20,6 +21,7 @@ class Game {
   void PauseGame();  // pause-game
   void SetSnakes(int grid_width, int grid_height);  // two-player
   int GetNrPlayers() const;  // two-player
+  void SetPlayers(int grid_width, int grid_height);  // player-class
 
  private:
   // Snake snake;
@@ -39,6 +41,7 @@ class Game {
   bool _paused{false};  // pause-game
   int const _nr_players; // two-player
   std::vector<Snake> _snakes;  //two-player
+  std::vector<Player> _players;  // player-class
 };
 
 #endif
