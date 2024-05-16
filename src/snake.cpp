@@ -77,3 +77,8 @@ bool Snake::SnakeCell(int x, int y) {
   }
   return false;
 }
+
+// pause-game
+void Snake::ChangeDirection(Snake::Direction input, Snake::Direction opposite){
+  if (direction != opposite || size == 1) direction = input;
+}

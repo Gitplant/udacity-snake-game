@@ -47,6 +47,7 @@ Involved code changes:<br>
     *  The method `Controller::HandleInput`:<br>
         a. now takes `Game* game` as an input instead of `Snake &snake`.<br>
         b. calls `game->PauseGame()` when space bar is pressed. <br>
-    *  The method `Controller::ChangeDirection(Snake &snake, Snake::Direction input, Snake::Direction opposite)` is moved to the `Game` class and renamed `Game::ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite)`
+    *  The method `Controller::ChangeDirection(Snake &snake, Snake::Direction input, Snake::Direction opposite)` is moved to the `Game` class and renamed `Game::ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite)`.
+    *  A new function `void ChangeDirection(Snake::Direction input, Snake::Direction opposite)` is added to the `Snake` class.
     *  The method `Game::PauseGame()` sets the attribute `_paused` to either `true` or `false`.
     *  `Game::Run` won't call `Update()` if `_paused` is false.

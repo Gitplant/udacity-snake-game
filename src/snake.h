@@ -28,6 +28,8 @@ class Snake {
   float head_y;
   std::vector<SDL_Point> body;
 
+  void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
+
  private:
   void UpdateHead();
   void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
