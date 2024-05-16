@@ -32,6 +32,7 @@ class Snake {
   std::vector<SDL_Point> body;
 
   void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
+  void PrintDirection(Snake::Direction direction); // two-player
 
  private:
   void UpdateHead();

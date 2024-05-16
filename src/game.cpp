@@ -98,8 +98,7 @@ int Game::GetSize() const { return snake.size; }
 
 // pause-game
 void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite) {
-  snake = _snakes[player_nr - 1];
-  snake.ChangeDirection(input, opposite);
+  _snakes[player_nr - 1].ChangeDirection(input, opposite);
   return;
 }
 

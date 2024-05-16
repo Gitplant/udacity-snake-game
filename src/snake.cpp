@@ -80,5 +80,30 @@ bool Snake::SnakeCell(int x, int y) {
 
 // pause-game
 void Snake::ChangeDirection(Snake::Direction input, Snake::Direction opposite){
+  // std::cout << "direction was: ";
+  // Snake::PrintDirection(direction);
   if (direction != opposite || size == 1) direction = input;
+  // std::cout << "direction is: ";
+  // Snake::PrintDirection(direction);
+}
+
+// two-player
+void Snake::PrintDirection(Snake::Direction direction){
+  switch (direction) {
+    case Direction::kUp:
+      std::cout << "kUp" << std::endl;
+      break;
+
+    case Direction::kDown:
+      std::cout << "kDown" << std::endl;
+      break;
+
+    case Direction::kLeft:
+      std::cout << "kLeft" << std::endl;
+      break;
+
+    case Direction::kRight:
+      std::cout << "kRight" << std::endl;
+      break;
+  }
 }
