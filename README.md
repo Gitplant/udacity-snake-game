@@ -56,3 +56,9 @@ Involved code changes:<br>
     * Get the number of players from the user:<br>
       a. The function `GetNrPlayers()` is defined in main, which asks the user to enter the number of players and returns an `int` accordingly.<br>
       b. Inside `main()`, the `nr_players` is set.
+
+## Rubric criteria that were met
+### Loops, Functions, I/O - meet at least 2 criteria
+|Criteria| Implementation|
+|--------|---------------|
+|The project accepts user input and processes the input.| 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
