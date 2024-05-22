@@ -16,7 +16,7 @@ class Player{
     void SetPlayerId(int id);
     int GetPlayerId(){return _player_id;};
     void UpdateScore(int score);
-    int GetScore();
+    int GetScore(){return _score;};
     void IncreaseScore();
     Snake snake;
     void HandleInput(bool &running);
