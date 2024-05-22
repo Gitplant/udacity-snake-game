@@ -75,7 +75,8 @@ void Renderer::Render(std::vector<Player> const players, SDL_Point const &food) 
     block.y = static_cast<int>(player.snake.head_y) * block.h;
     if (player.snake.alive) {
 
-      SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
+      // SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
+      SDL_SetRenderDrawColor(sdl_renderer, player.snake.color.r, player.snake.color.g, player.snake.color.b, player.snake.color.a);
     } else {
       SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
     }

@@ -4,14 +4,11 @@
 #include "snake.h"
 #include "controller.h"
 
+
 class Player{
 
     public:
-    Player(int&& player_id, Snake snake)
-      : _player_id(player_id),
-        snake(snake),
-        // _controller(controller),
-        _score(0) {}
+    Player(int&& player_id, int grid_width, int grid_height, float head_x);
 
     void SetPlayerId(int id);
     int GetPlayerId(){return _player_id;};

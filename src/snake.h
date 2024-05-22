@@ -4,18 +4,19 @@
 #include <vector>
 #include "SDL.h"
 
+struct Color{
+    Uint8 r;
+    Uint8 g;
+    Uint8 b;
+    Uint8 a;
+  };
+
 class Snake {
  public:
   enum class Direction { kUp, kDown, kLeft, kRight };
 
   // Snake(int grid_width, int grid_height)
-  Snake(int grid_width, int grid_height, float head_x)  // two-player
-      : grid_width(grid_width),
-        grid_height(grid_height),
-        // head_x(grid_width / 2),
-        // head_y(grid_height / 2) {}
-        head_x(head_x),  // two-player
-        head_y(grid_height / 2) {}  // two-player
+  Snake(int grid_width, int grid_height, float head_x, Color color = Color{255, 255, 255, 255});  // two-player
 
   void Update();
 
@@ -33,6 +34,8 @@ class Snake {
 
   void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void PrintDirection(Snake::Direction direction); // two-player
+
+  Color color;
 
  private:
   void UpdateHead();

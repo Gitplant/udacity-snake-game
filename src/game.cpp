@@ -168,8 +168,9 @@ void Game::SetPlayers(int grid_width, int grid_height){
   for (int i = 0; i < _nr_players; i++)
   {
     float head_x = grid_width * (i+1) / (_nr_players + 1);
-    Snake snake(grid_width, grid_height, head_x);
-    Player player(i+1, snake);
+    // Snake snake(grid_width, grid_height, head_x);
+    // Player player(i+1, snake);
+    Player player(i+1, grid_width, grid_height, head_x);
     // Player player(i+1);
     _players.push_back(player);
   }
