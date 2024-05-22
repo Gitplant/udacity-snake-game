@@ -11,9 +11,11 @@
 class Game {
  public:
   // Game(std::size_t grid_width, std::size_t grid_height);
-  Game(std::size_t grid_width, std::size_t grid_height, int nr_players);  // two-player
-  void Run(Controller const &controller, Renderer &renderer,
-           std::size_t target_frame_duration);
+  // Game(std::size_t grid_width, std::size_t grid_height, int nr_players);  // two-player
+  Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller);  // two-player
+  // void Run(Controller const &controller, Renderer &renderer,
+  //          std::size_t target_frame_duration);
+  void Run(Renderer &renderer, std::size_t target_frame_duration);
   // int GetScore() const;
   // int GetSize() const;
   // void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
@@ -43,6 +45,7 @@ class Game {
   int const _nr_players; // two-player
   std::vector<Snake> _snakes;  //two-player
   std::vector<Player> _players;  // player-class
+  Controller _controller;  // concurrency2
 };
 
 #endif

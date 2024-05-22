@@ -6,20 +6,23 @@
 #include "SDL.h"
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
-Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
+// Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
+Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller)  // two-player
     // : snake(grid_width, grid_height),
     // : snake(grid_width, grid_height, grid_width / 2),  // two-player
       : engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)),
-      _nr_players(nr_players) {  // two-player
+      _nr_players(nr_players),
+      _controller(controller) {  // two-player
   PlaceFood();
   // SetSnakes(grid_width, grid_height);
   SetPlayers(grid_width, grid_height);
 }
 
-void Game::Run(Controller const &controller, Renderer &renderer,
-               std::size_t target_frame_duration) {
+// void Game::Run(Controller const &controller, Renderer &renderer,
+//                std::size_t target_frame_duration) {
+  void Game::Run(Renderer &renderer, std::size_t target_frame_duration) {
   Uint32 title_timestamp = SDL_GetTicks();
   Uint32 frame_start;
   Uint32 frame_end;
@@ -44,7 +47,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     //   t.join();  // concurrency
     // }  // concurrency
 
-    controller.HandleInput(running, _players, this);
+    // controller.HandleInput(running, _players, this);
+    _controller.HandleInput(running, _players, this);
     /* For threading SDL_PollEvent:
     "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/
 
