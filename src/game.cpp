@@ -175,3 +175,14 @@ void Game::SetPlayers(int grid_width, int grid_height){
     _players.push_back(player);
   }
 }
+
+// clean-up
+void Game::PrintScores(){
+
+  if (_nr_players ==1){std::cout << "Score: " << _players[0].GetScore() << "\n";}
+  else{std::cout << "Scores:\n";
+    for (Player player : _players){
+    std::cout << "   Player " << player.GetPlayerId() << ": " << player.GetScore() << "\n";
+    }
+  }
+}
