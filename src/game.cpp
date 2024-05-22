@@ -177,12 +177,9 @@ void Game::SetPlayers(int grid_width, int grid_height){
 }
 
 // clean-up
-void Game::PrintScores(){
+void Game::PrintResults(){
 
-  if (_nr_players ==1){std::cout << "Score: " << _players[0].GetScore() << "\n";}
-  else{std::cout << "Scores:\n";
-    for (Player player : _players){
-    std::cout << "   Player " << player.GetPlayerId() << ": " << player.GetScore() << "\n";
-    }
+  for (Player player : _players){
+    std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake.GetSize() << "\n";
   }
 }

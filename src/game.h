@@ -22,7 +22,7 @@ class Game {
   void SetSnakes(int grid_width, int grid_height);  // two-player
   int GetNrPlayers() const;  // two-player
   void SetPlayers(int grid_width, int grid_height);  // player-class
-  void PrintScores();  // clean-up
+  void PrintResults();  // clean-up
 
  private:
   // Snake snake;

@@ -34,6 +34,7 @@ class Snake {
 
   void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void PrintDirection(Snake::Direction direction); // two-player
+  int GetSize(){return size;};
 
   Color color;
 
