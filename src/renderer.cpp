@@ -41,7 +41,7 @@ Renderer::~Renderer() {
 
 // void Renderer::Render(Snake const snake, SDL_Point const &food) {
 // void Renderer::Render(std::vector<Snake> const snakes, SDL_Point const &food) {  // two-player
-void Renderer::Render(std::vector<Player> const players, SDL_Point const &food) {  // two-player, player-class
+void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food) {  // two-player, player-class
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;

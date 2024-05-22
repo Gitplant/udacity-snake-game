@@ -14,7 +14,7 @@ class Renderer {
 
   // void Render(Snake const snake, SDL_Point const &food);
   // void Render(std::vector<Snake> const snakes, SDL_Point const &food);  // two-player
-  void Render(std::vector<Player> const players, SDL_Point const &food);  // two-player, player-class
+  void Render(std::vector<Player> const &players, SDL_Point const &food);  // two-player, player-class
   // void UpdateWindowTitle(int score, int fps);
   void UpdateWindowTitle(std::vector<Player> &players, int fps) const;  // player-class
 
