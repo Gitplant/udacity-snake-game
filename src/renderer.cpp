@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include "player.h"  // player-class
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -39,7 +40,8 @@ Renderer::~Renderer() {
 }
 
 // void Renderer::Render(Snake const snake, SDL_Point const &food) {
-void Renderer::Render(std::vector<Snake> const snakes, SDL_Point const &food) {  // two-player
+// void Renderer::Render(std::vector<Snake> const snakes, SDL_Point const &food) {  // two-player
+void Renderer::Render(std::vector<Player> const players, SDL_Point const &food) {  // two-player, player-class
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -54,19 +56,25 @@ void Renderer::Render(std::vector<Snake> const snakes, SDL_Point const &food) { 
   block.y = food.y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  for(Snake snake : snakes){  // two-player
+  // for(Snake snake : snakes){  // two-player
+  for(Player player : players){  // two-player, player-class
     // Render snake's body
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    for (SDL_Point const &point : snake.body) {
+    // for (SDL_Point const &point : snake.body) {
+      for (SDL_Point const &point : player.snake.body) {
       block.x = point.x * block.w;
       block.y = point.y * block.h;
       SDL_RenderFillRect(sdl_renderer, &block);
     }
 
     // Render snake's head
-    block.x = static_cast<int>(snake.head_x) * block.w;
-    block.y = static_cast<int>(snake.head_y) * block.h;
-    if (snake.alive) {
+    // block.x = static_cast<int>(snake.head_x) * block.w;
+    // block.y = static_cast<int>(snake.head_y) * block.h;
+    // if (snake.alive) {
+    block.x = static_cast<int>(player.snake.head_x) * block.w;
+    block.y = static_cast<int>(player.snake.head_y) * block.h;
+    if (player.snake.alive) {
+
       SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
     } else {
       SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);

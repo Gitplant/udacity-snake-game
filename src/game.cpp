@@ -32,22 +32,28 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // Input, Update, Render - the main game loop.
     // controller.HandleInput(running, snake);
-    controller.HandleInput(running, this);  // pause-game
+    // controller.HandleInput(running, this);  // pause-game
 
     // Allow both players to give input at the same time
-    if (_nr_players == 2){  // concurrency
-      // Use multi-threading
-      // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
-      std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
-      // std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
-      // std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
-      t.join();  // concurrency
-    }  // concurrency
+    // if (_nr_players == 2){  // concurrency
+    //   // Use multi-threading
+    //   // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
+    //   // std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
+    //   // std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
+    //   // std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
+    //   t.join();  // concurrency
+    // }  // concurrency
+
+    controller.HandleInput(running, _players, this);
+    /* For threading SDL_PollEvent:
+    "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/
+
     if (!_paused){  // pause-game
     Update();
     }  // pause-game
     // renderer.Render(snake, food);
-    renderer.Render(_snakes, food);  // two-player
+    // renderer.Render(_snakes, food);  // two-player
+    renderer.Render(_players, food);  // player-class
 
     frame_end = SDL_GetTicks();
 
@@ -96,21 +102,29 @@ void Game::PlaceFood() {
 }
 
 void Game::Update() {
-  for (Snake& snake : _snakes){  // two-player
-    if (!snake.alive) return;
+  // for (Snake& snake : _snakes){  // two-player
+  for (Player& player : _players){  // player-class
+    // if (!snake.alive) return;
+    if (!player.snake.alive) return;
+  }
+  for (Player& player : _players){  // player-class
+    player.snake.Update();
 
-    snake.Update();
-
-    int new_x = static_cast<int>(snake.head_x);
-    int new_y = static_cast<int>(snake.head_y);
+    // int new_x = static_cast<int>(snake.head_x);
+    // int new_y = static_cast<int>(snake.head_y);
+    int new_x = static_cast<int>(player.snake.head_x);
+    int new_y = static_cast<int>(player.snake.head_y);
 
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y) {
-      score++;
+      // score++;
+      player.IncreaseScore();
       PlaceFood();
       // Grow snake and increase speed.
-      snake.GrowBody();
-      snake.speed += 0.02;
+      // snake.GrowBody();
+      // snake.speed += 0.02;
+      player.snake.GrowBody();
+      player.snake.speed += 0.02;
     }
   }  // two-player
 }
@@ -154,8 +168,7 @@ void Game::SetPlayers(int grid_width, int grid_height){
   {
     float head_x = grid_width * (i+1) / (_nr_players + 1);
     Snake snake(grid_width, grid_height, head_x);
-    Controller controller;
-    Player player(i+1, snake, controller);
+    Player player(i+1, snake);
     // Player player(i+1);
     _players.push_back(player);
   }
