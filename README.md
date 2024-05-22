@@ -64,18 +64,52 @@ Involved code changes:<br>
     * A helper function for printing the snake's direction (`Snake::PrintDirection`) was introduced.
 
 ## Rubric criteria that were met
-### Loops, Functions, I/O - meet at least 2 criteria
-|Criteria| Implementation|
-|--------|---------------|
-|The project accepts user input and processes the input.| 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
-|The project uses data structures and immutable variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
 
-### Memory Management - meet at least 3 criteria
+## README (All Rubric Points REQUIRED)
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-|The project makes use of references in function declarations.|At least two variables are defined as references, or two functions use pass-by-reference in the project code.|1. In `void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite)`, the `player_nr` is passed as an r-value reference.|
+|A README with instructions is included with the project |The README is included with the project and has instructions for building/running the project. <br> If any additional libraries are needed to run the project, these are indicated with cross-platform installation instructions. <br> You can submit your writeup as markdown or pdf. | This markdown README is provided. |
+|The README indicates the new features you added to the game. | The README indicates the new features you added to the game, along with the expected behavior or output of the program. ||
+|The README includes information about each rubric point addressed. | The README indicates which rubric points are addressed. The README also indicates where in the code (i.e. files and line numbers) that the rubric points are addressed.| This is done in this section "Rubric criteria that were met"|
+
+## Compiling and Testing (All Rubric Points REQUIRED)
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+| The submission must compile and run without errors on the Udacity project workspace. | We strongly recommend using cmake and make, as provided in the starter repos. If you choose another build system, the code must be compiled on the Udacity project workspace. | The project can be built using cmake and make.|
+
+## Object Oriented Programming - meet at least 3 criteria
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+| One or more classes are added to the project with appropriate access specifiers for class members. | Classes are organized with attributes to hold data and methods to perform tasks. <br> All class data members are explicitly specified as public, protected, or private. <br> Member data that is subject to an invariant is hidden from the user and accessed via member methods. |The class `Player` was added to the project.|
+| Class constructors utilize member initialization lists. | All class members that are set to argument values are initialized through member initialization lists.||
+|Classes abstract implementation details from their interfaces. | All class member functions document their effects, either through function names, comments, or formal documentation. <br> Member functions do not change the program state in undocumented ways. ||
+| Overloaded functions allow the same function to operate on different parameters. | One function is overloaded with different signatures for the same function name.||
+| Classes follow an appropriate inheritance hierarchy with virtual and override functions. | Inheritance hierarchies are logical. One member function in an inherited class overrides a virtual base class member function. ||
+|Templates generalize functions or classes in the project. | One function or class is declared with a template that allows it to accept a generic parameter.||
+
+## Memory Management - meet at least 3 criteria
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+| The project makes use of references in function declarations. | At least two variables are defined as references, or two functions use pass-by-reference in the project code. |1. In `void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite)`, the `player_nr` is passed as an r-value reference.|
+|The project uses destructors appropriately. | At least one class that uses unmanaged dynamically allocated memory, along with any class that otherwise needs to modify state upon the termination of an object, uses a destructor. ||
+| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | The project follows the Resource Acquisition Is Initialization pattern where appropriate, by allocating objects at compile-time, initializing objects when they are declared, and utilizing scope to ensure their automatic destruction. ||
+| The project follows the Rule of 5. | For all classes, if any one of the copy constructor, copy assignment operator, move constructor, move assignment operator, and destructor are defined, then all of these functions are defined. ||
+| The project uses move semantics to move data instead of copying it, where possible. | The project relies on the move semantics, instead of copying the object. ||
+| The project uses smart pointers instead of raw pointers. | The project uses at least one smart pointer: `unique_ptr`, `shared_ptr`, or `weak_ptr`. ||
+
+
+### Loops, Functions, I/O - meet at least 2 criteria
+|Criteria|	Submission Requirements| Implementation|
+|--------|---------------|----------|
+|The project demonstrates an understanding of C++ functions and control structures. | A variety of control structures are added to the project. <br> The project code is clearly organized into functions.||
+|The project reads data from a file and process the data, or the program writes data to a file.| The project reads data from an external file or writes data to a file as part of the necessary operation of the program.||
+|The project accepts user input and processes the input.|	In addition to controlling the snake, the game can also receive new types of input from the player. | 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
+|The project uses data structures and immutable variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
 
 ### Concurrency - meet at least 2 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-|The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| In `Game::Run` a thread is started to collect the keyboard input from the second player|
+|The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| |
+|  promise and future is used in the project. | A promise and future is used to pass data from a worker thread to a parent thread in the project code. ||
+|A mutex or lock is used in the project. | A mutex or lock (e.g. `std::lock_guard` or `std::unique_lock`) is used to protect data that is shared across multiple threads in the project code. ||
+| A condition variable is used in the project. | A `std::condition_variable`` is used in the project code to synchronize thread execution. ||
