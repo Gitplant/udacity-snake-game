@@ -14,7 +14,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // 
       random_h(0, static_cast<int>(grid_height - 1)),
       _nr_players(nr_players) {  // two-player
   PlaceFood();
-  SetSnakes(grid_width, grid_height);
+  // SetSnakes(grid_width, grid_height);
   SetPlayers(grid_width, grid_height);
 }
 
@@ -150,14 +150,14 @@ void Game::PauseGame(){
 }
 
 // two-player
-void Game::SetSnakes(int grid_width, int grid_height){
-  for (int i = 0; i < _nr_players; i++)
-  {
-    float head_x = grid_width * (i+1) / (_nr_players + 1);
-    Snake snake(grid_width, grid_height, head_x);
-    _snakes.push_back(snake);
-  }
-}
+// void Game::SetSnakes(int grid_width, int grid_height){
+//   for (int i = 0; i < _nr_players; i++)
+//   {
+//     float head_x = grid_width * (i+1) / (_nr_players + 1);
+//     Snake snake(grid_width, grid_height, head_x);
+//     _snakes.push_back(snake);
+//   }
+// }
 
 int Game::GetNrPlayers() const {  // two-player
   return _nr_players;
@@ -177,7 +177,7 @@ void Game::SetPlayers(int grid_width, int grid_height){
 }
 
 // clean-up
-void Game::PrintResults(){
+void Game::PrintResults() const{
 
   for (Player player : _players){
     std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake.GetSize() << "\n";
