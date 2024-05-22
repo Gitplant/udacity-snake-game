@@ -14,7 +14,7 @@ class Game {
   Game(std::size_t grid_width, std::size_t grid_height, int nr_players);  // two-player
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
-  int GetScore() const;
+  // int GetScore() const;
   // int GetSize() const;
   // void ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void ChangeSnakeDirection(int&& snake_nr, Snake::Direction input, Snake::Direction opposite);  // pause-game, two-player
@@ -33,7 +33,7 @@ class Game {
   std::uniform_int_distribution<int> random_w;
   std::uniform_int_distribution<int> random_h;
 
-  int score{0};
+  // int score{0};
 
   void PlaceFood();
   void Update();

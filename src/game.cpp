@@ -130,7 +130,7 @@ void Game::Update() {
   }  // two-player
 }
 
-int Game::GetScore() const { return score; }
+// int Game::GetScore() const { return score; }
 // int Game::GetSize() const { return snake.size; }
 
 // pause-game
