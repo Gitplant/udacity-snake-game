@@ -27,7 +27,7 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  int nr_players = GetNrPlayers(); // two-player
+  int const nr_players = GetNrPlayers(); // two-player
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;

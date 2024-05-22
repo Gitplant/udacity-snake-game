@@ -100,7 +100,7 @@ void Snake::ChangeDirection(Snake::Direction input, Snake::Direction opposite){
 }
 
 // two-player
-void Snake::PrintDirection(Snake::Direction direction){
+void Snake::PrintDirection(Snake::Direction direction) const {
   switch (direction) {
     case Direction::kUp:
       std::cout << "kUp" << std::endl;

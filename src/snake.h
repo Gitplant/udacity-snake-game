@@ -33,8 +33,8 @@ class Snake {
   std::vector<SDL_Point> body;
 
   void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
-  void PrintDirection(Snake::Direction direction); // two-player
-  int GetSize(){return size;};
+  void PrintDirection(Snake::Direction direction) const; // two-player
+  int GetSize() const {return size;};
 
   Color color;
 
@@ -43,8 +43,8 @@ class Snake {
   void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
   bool growing{false};
-  int grid_width;
-  int grid_height;
+  int const grid_width;
+  int const grid_height;
 };
 
 #endif

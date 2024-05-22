@@ -11,16 +11,15 @@ class Player{
     Player(int&& player_id, int grid_width, int grid_height, float head_x);
 
     void SetPlayerId(int id);
-    int GetPlayerId(){return _player_id;};
+    int GetPlayerId() const {return _player_id;};
     void UpdateScore(int score);
-    int GetScore(){return _score;};
+    int GetScore() const {return _score;};
     void IncreaseScore();
     Snake snake;
-    void HandleInput(bool &running);
 
     private:
         // Controller _controller;
-        int _player_id;
+        int const _player_id;
         int _score;
 
 };
