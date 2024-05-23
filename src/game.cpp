@@ -41,14 +41,19 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, std:
 
     // controller.HandleInput(running, _players, this);
     // _controller.HandleInput(running, _players, this);
-    _controller.get()->HandleInput(running, _players, this);
+    // _controller.get()->HandleInput(running, _players, this);
+    // _controller.get()->HandleInput(running, _players[0], this);
     if (_nr_players == 2){
       // std::thread t([&running, &_players, this](){_controller.get()->HandleInput(running, _players, this);});  // concurrency2
       // std::thread t(_controller.get()->HandleInput, running, _players, this);  // concurrency2
-      std::thread t(&Controller::HandleInput, _controller.get(), std::ref(running), std::ref(_players), this);
-      std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
+      // std::thread t(&Controller::HandleInput, _controller.get(), std::ref(running), std::ref(_players), this);
+      std::thread t1(&Controller::HandleInput, _controller.get(), std::ref(running), std::ref(_players[0]), this);
+      std::thread t2(&Controller::HandleInput, _controller.get(), std::ref(running), std::ref(_players[1]), this);
+      std::cout << "Thread 1 id = " << t1.get_id() << std::endl;  // concurrency
+      std::cout << "Thread 2 id = " << t2.get_id() << std::endl;  // concurrency
       std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
-      t.join();  // concurrency2
+      t1.join();  // concurrency2
+      t2.join();  // concurrency2
     }
     /* For threading SDL_PollEvent:
     "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/

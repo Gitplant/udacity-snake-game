@@ -10,7 +10,8 @@ class Controller {
  public:
 //   void HandleInput(bool &running, Snake &snake) const;
 // void HandleInput(bool &running, Snake &snake, Game* game) const;
-  void HandleInput(bool &running, std::vector<Player> &players, Game* game) const;
+  // void HandleInput(bool &running, std::vector<Player> &players, Game* game) const;
+  void HandleInput(bool &running, Player &player, Game* game) const;
 
 
  private:
