@@ -104,7 +104,7 @@ Involved code changes:<br>
 |The project demonstrates an understanding of C++ functions and control structures. | A variety of control structures are added to the project. <br> The project code is clearly organized into functions.||
 |The project reads data from a file and process the data, or the program writes data to a file.| The project reads data from an external file or writes data to a file as part of the necessary operation of the program.||
 |The project accepts user input and processes the input.|	In addition to controlling the snake, the game can also receive new types of input from the player. | 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
-|The project uses data structures and immutable variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
+|The project uses data structures and immutable variables.|The project uses arrays or vectors and uses constant variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
 
 ### Concurrency - meet at least 2 criteria
 |Criteria|	Submission Requirements| Implementation|
