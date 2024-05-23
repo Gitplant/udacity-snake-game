@@ -95,7 +95,7 @@ Involved code changes:<br>
 | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | The project follows the Resource Acquisition Is Initialization pattern where appropriate, by allocating objects at compile-time, initializing objects when they are declared, and utilizing scope to ensure their automatic destruction. ||
 | The project follows the Rule of 5. | For all classes, if any one of the copy constructor, copy assignment operator, move constructor, move assignment operator, and destructor are defined, then all of these functions are defined. ||
 | The project uses move semantics to move data instead of copying it, where possible. | The project relies on the move semantics, instead of copying the object. ||
-| The project uses smart pointers instead of raw pointers. | The project uses at least one smart pointer: `unique_ptr`, `shared_ptr`, or `weak_ptr`. ||
+| The project uses smart pointers instead of raw pointers. | The project uses at least one smart pointer: `unique_ptr`, `shared_ptr`, or `weak_ptr`. | The `snake` attribute of the `Player` class is a unique pointer.|
 
 
 ### Loops, Functions, I/O - meet at least 2 criteria
