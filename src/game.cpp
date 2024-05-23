@@ -126,6 +126,7 @@ void Game::Update() {
       // snake.speed += 0.02;
       player.snake.GrowBody();
       player.snake.speed += 0.02;
+      std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     }
   }  // two-player
 }
