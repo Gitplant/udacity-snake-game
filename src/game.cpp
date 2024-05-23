@@ -3,6 +3,7 @@
 #include "player.h"  // player-class
 #include <iostream>
 #include <thread>  // concurrency
+#include <functional>  // concurrency2
 #include "SDL.h"
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
@@ -38,19 +39,17 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, std:
     // controller.HandleInput(running, snake);
     // controller.HandleInput(running, this);  // pause-game
 
-    // Allow both players to give input at the same time
-    // if (_nr_players == 2){  // concurrency
-    //   // Use multi-threading
-    //   // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
-    //   // std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
-    //   // std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
-    //   // std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
-    //   t.join();  // concurrency
-    // }  // concurrency
-
     // controller.HandleInput(running, _players, this);
     // _controller.HandleInput(running, _players, this);
     _controller.get()->HandleInput(running, _players, this);
+    if (_nr_players == 2){
+      // std::thread t([&running, &_players, this](){_controller.get()->HandleInput(running, _players, this);});  // concurrency2
+      // std::thread t(_controller.get()->HandleInput, running, _players, this);  // concurrency2
+      std::thread t(&Controller::HandleInput, _controller.get(), std::ref(running), std::ref(_players), this);
+      std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
+      std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
+      t.join();  // concurrency2
+    }
     /* For threading SDL_PollEvent:
     "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/
 
