@@ -12,6 +12,9 @@ class Controller {
 // void HandleInput(bool &running, Snake &snake, Game* game) const;
   void HandleInput(bool &running, std::vector<Player> &players, Game* game) const;
 
+  // Controller(){};  // temp
+  // Controller(const Controller& other);  // temp
+
 
  private:
 //   void ChangeDirection(Snake &snake, Snake::Direction input,
