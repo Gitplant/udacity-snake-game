@@ -17,7 +17,7 @@ class Player{
     int GetScore() const {return _score;};
     void IncreaseScore();
     // Snake snake;
-    std::shared_ptr<Snake> snake;
+    std::unique_ptr<Snake> snake;
     // Player(const Player&);  // temp
 
 
