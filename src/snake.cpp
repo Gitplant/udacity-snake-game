@@ -80,10 +80,7 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
 void Snake::GrowBody() {
   std::mutex _mutex;
   std::lock_guard<std::mutex> lock(_mutex);
-  std::cout << "growing" << std::endl;
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-  growing = true;
-  std::cout << "done growing" << std::endl;}
+  growing = true;}
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y) {

@@ -84,8 +84,6 @@ void Game::PlaceFood() {
   std::mutex _mutex;
 
   std::unique_lock<std::mutex> lck(_mutex);
-  std::cout << "Placing food (1500)\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
   lck.unlock();
 
 
@@ -109,7 +107,6 @@ void Game::PlaceFood() {
         lck.lock();
         food.x = x;
         food.y = y;
-        std::cout << "Done placing food\n";
         lck.unlock();
         return;
     }
@@ -132,23 +129,20 @@ void Game::Update() {
 
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y) {
-      std::cout << "\n Checking if there's food over here\n";
       // score++;
       // player.IncreaseScore();
-      std::thread t1(&Player::IncreaseScore, &player);  // concurrency3
+      std::thread tIncreaseScore(&Player::IncreaseScore, &player);  // concurrency3
       // PlaceFood();
-      std::thread t2(&Game::PlaceFood, this);  // concurrency3
+      std::thread tPlaceFood(&Game::PlaceFood, this);  // concurrency3
       // Grow snake and increase speed.
       // snake.GrowBody();
       // snake.speed += 0.02;
-      std::thread t3(&Snake::GrowBody, &player.snake);  // concurrency3
+      std::thread tGrowBody(&Snake::GrowBody, &player.snake);  // concurrency3
       // player.snake.GrowBody();
       player.snake.speed += 0.02;
-      // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-      t1.join();  // concurrency3
-      t2.join();
-      t3.join();
-      std::cout << "Done checking if there's food over here\n\n";
+      tIncreaseScore.join();  // concurrency3
+      tPlaceFood.join();
+      tGrowBody.join();
     }
   }  // two-player
 }
