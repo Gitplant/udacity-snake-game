@@ -21,8 +21,8 @@ class Player{
 
     // Rule of five:
     ~Player();
-    Player(const Player& other);
-    Player& operator=(const Player& other);
+    Player(const Player& other) = delete;
+    Player& operator=(const Player& other) = delete;
     Player(Player&& other) noexcept ;
     Player& operator=(Player&& other) noexcept;
 
