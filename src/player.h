@@ -16,6 +16,8 @@ class Player{
     int GetScore() const {return _score;};
     void IncreaseScore();
     Snake snake;
+    // Player(const Player&);  // temp
+
 
     private:
         // Controller _controller;

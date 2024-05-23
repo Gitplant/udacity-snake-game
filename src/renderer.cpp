@@ -57,7 +57,7 @@ void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food)
   SDL_RenderFillRect(sdl_renderer, &block);
 
   // for(Snake snake : snakes){  // two-player
-  for(Player player : players){  // two-player, player-class
+  for(const Player& player : players){  // two-player, player-class
     // Render snake's body
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     // for (SDL_Point const &point : snake.body) {
@@ -90,7 +90,7 @@ void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food)
 // void Renderer::UpdateWindowTitle(int score, int fps) {
 void Renderer::UpdateWindowTitle(std::vector<Player> &players, int fps) const {
   std::string title;
-  for (Player player: players){  // player-class
+  for (const Player &player: players){  // player-class
     title += "Player " + std::to_string(player.GetPlayerId()) + ": " + std::to_string(player.GetScore()) + "   ";
   }
   title += "FPS: " + std::to_string(fps);

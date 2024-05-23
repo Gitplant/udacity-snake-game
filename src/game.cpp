@@ -115,7 +115,7 @@ void Game::PlaceFood() {
 
 void Game::Update() {
   // for (Snake& snake : _snakes){  // two-player
-  for (Player& player : _players){  // player-class
+  for (const Player& player : _players){  // player-class
     // if (!snake.alive) return;
     if (!player.snake.alive) return;
   }
@@ -189,14 +189,15 @@ void Game::SetPlayers(int grid_width, int grid_height){
     // Player player(i+1, snake);
     Player player(i+1, grid_width, grid_height, head_x);
     // Player player(i+1);
-    _players.push_back(player);
+    // _players.push_back(player);
+    _players.emplace_back(std::move(player));
   }
 }
 
 // clean-up
 void Game::PrintResults() const{
 
-  for (Player player : _players){
+  for (const Player& player : _players){
     std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake.GetSize() << "\n";
   }
 }
