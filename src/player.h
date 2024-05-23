@@ -18,7 +18,13 @@ class Player{
     void IncreaseScore();
     // Snake snake;
     std::unique_ptr<Snake> snake;
-    // Player(const Player&);  // temp
+
+    // Rule of five:
+    ~Player();
+    Player(const Player& other);
+    Player& operator=(const Player& other);
+    Player(Player&& other) noexcept ;
+    Player& operator=(Player&& other) noexcept;
 
 
     private:
