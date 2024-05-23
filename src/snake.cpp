@@ -124,3 +124,9 @@ void Snake::PrintDirection(Snake::Direction direction) const {
       break;
   }
 }
+
+// temp
+// Snake::Snake(const Snake& other) : speed(other.speed), size(other.size), alive(other.alive), head_x(other.head_x), head_y(other.head_y), body(other.body),
+// growing(other.growing), grid_width(other.grid_width), grid_height(other.grid_height), color(other.color), direction(other.direction){
+//     std::cout << "  -------------------------   Snake copy constructor called." << std::endl;
+//     }
