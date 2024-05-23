@@ -3,6 +3,7 @@
 
 #include "snake.h"
 #include "controller.h"
+#include <memory>  // std::shared_ptr
 
 
 class Player{
@@ -15,7 +16,8 @@ class Player{
     void UpdateScore(int score);
     int GetScore() const {return _score;};
     void IncreaseScore();
-    Snake snake;
+    // Snake snake;
+    std::shared_ptr<Snake> snake;
     // Player(const Player&);  // temp
 
 

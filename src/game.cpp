@@ -117,15 +117,15 @@ void Game::Update() {
   // for (Snake& snake : _snakes){  // two-player
   for (const Player& player : _players){  // player-class
     // if (!snake.alive) return;
-    if (!player.snake.alive) return;
+    if (!player.snake->alive) return;
   }
   for (Player& player : _players){  // player-class
-    player.snake.Update();
+    player.snake->Update();
 
     // int new_x = static_cast<int>(snake.head_x);
     // int new_y = static_cast<int>(snake.head_y);
-    int new_x = static_cast<int>(player.snake.head_x);
-    int new_y = static_cast<int>(player.snake.head_y);
+    int new_x = static_cast<int>(player.snake->head_x);
+    int new_y = static_cast<int>(player.snake->head_y);
 
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y) {
@@ -137,9 +137,9 @@ void Game::Update() {
       // Grow snake and increase speed.
       // snake.GrowBody();
       // snake.speed += 0.02;
-      std::thread tGrowBody(&Snake::GrowBody, &player.snake);  // concurrency3
+      std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));  // concurrency3
       // player.snake.GrowBody();
-      player.snake.speed += 0.02;
+      player.snake->speed += 0.02;
       tIncreaseScore.join();  // concurrency3
       tPlaceFood.join();
       tGrowBody.join();
@@ -198,6 +198,6 @@ void Game::SetPlayers(int grid_width, int grid_height){
 void Game::PrintResults() const{
 
   for (const Player& player : _players){
-    std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake.GetSize() << "\n";
+    std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake->GetSize() << "\n";
   }
 }

@@ -30,7 +30,7 @@
             //                 Snake::Direction::kDown);
             // game->ChangeSnakeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game
             // game->ChangeSnakeDirection(1, Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game, two-player
-            players[0].snake.ChangeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game, two-player, player-class
+            players[0].snake->ChangeDirection(Snake::Direction::kUp, Snake::Direction::kDown);  // pause-game, two-player, player-class
             break;
 
           case SDLK_DOWN:
@@ -38,21 +38,21 @@
             //                 Snake::Direction::kUp);
             // game->ChangeSnakeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game
             // game->ChangeSnakeDirection(1, Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game, two-player
-            players[0].snake.ChangeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game, two-player
+            players[0].snake->ChangeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // pause-game, two-player
             break;
 
           case SDLK_LEFT:
             // ChangeDirection(snake, Snake::Direction::kLeft,
             //                 Snake::Direction::kRight);
             // game->ChangeSnakeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game
-            players[0].snake.ChangeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game, two-player
+            players[0].snake->ChangeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // pause-game, two-player
             break;
 
           case SDLK_RIGHT:
             // ChangeDirection(snake, Snake::Direction::kRight,
             //                 Snake::Direction::kLeft);
             // game->ChangeSnakeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game
-            players[0].snake.ChangeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game, two-player
+            players[0].snake->ChangeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // pause-game, two-player
             break;
         // case SDLK_SPACE:
         //   game->PauseGame();
@@ -60,22 +60,22 @@
         // PLAYER 2 uses WASD
         case SDLK_w:
       //     // game->ChangeSnakeDirection(2, Snake::Direction::kUp, Snake::Direction::kDown);  // two-player
-          players[1].snake.ChangeDirection(Snake::Direction::kUp, Snake::Direction::kDown);
+          players[1].snake->ChangeDirection(Snake::Direction::kUp, Snake::Direction::kDown);
           break;
 
         case SDLK_s:
       //     // game->ChangeSnakeDirection(2, Snake::Direction::kDown, Snake::Direction::kUp);  // two-player
-          players[1].snake.ChangeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // two-player
+          players[1].snake->ChangeDirection(Snake::Direction::kDown, Snake::Direction::kUp);  // two-player
           break;
 
         case SDLK_a:
           // game->ChangeSnakeDirection(2, Snake::Direction::kLeft, Snake::Direction::kRight);  // two-player
-          players[1].snake.ChangeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // two-player
+          players[1].snake->ChangeDirection(Snake::Direction::kLeft, Snake::Direction::kRight);  // two-player
           break;
 
         case SDLK_d:
       //     // game->ChangeSnakeDirection(2, Snake::Direction::kRight, Snake::Direction::kLeft);  // two-player
-          players[1].snake.ChangeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // two-player
+          players[1].snake->ChangeDirection(Snake::Direction::kRight, Snake::Direction::kLeft);  // two-player
           break;
       }
     }
