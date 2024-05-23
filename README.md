@@ -109,7 +109,7 @@ Involved code changes:<br>
 ### Concurrency - meet at least 2 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-|The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| |
+|The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| The project uses threads when increasing the score, placing food and growing the body in `Game::Update`.|
 |  promise and future is used in the project. | A promise and future is used to pass data from a worker thread to a parent thread in the project code. ||
-|A mutex or lock is used in the project. | A mutex or lock (e.g. `std::lock_guard` or `std::unique_lock`) is used to protect data that is shared across multiple threads in the project code. ||
+|A mutex or lock is used in the project. | A mutex or lock (e.g. `std::lock_guard` or `std::unique_lock`) is used to protect data that is shared across multiple threads in the project code. |Mutexes and locks are used in: <br> * `Game::PlaceFood` (`std::unique_lock`) <br> * `Snake::GrowBody` <br> * `Player::IncreaseScore`|
 | A condition variable is used in the project. | A `std::condition_variable`` is used in the project code to synchronize thread execution. ||
