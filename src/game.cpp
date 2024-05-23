@@ -3,6 +3,7 @@
 #include "player.h"  // player-class
 #include <iostream>
 #include <thread>  // concurrency
+#include <mutex>  // concurrency3
 #include "SDL.h"
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
@@ -80,9 +81,12 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::PlaceFood() {
+  std::mutex _mutex;
 
+  std::unique_lock<std::mutex> lck(_mutex);
   std::cout << "Placing food (1500)\n";
   std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  lck.unlock();
 
 
   int x, y;
@@ -96,13 +100,17 @@ void Game::PlaceFood() {
     for (Snake& snake : _snakes){  // two-player
       // if (!snake.SnakeCell(x, y)) {
       if (snake.SnakeCell(x, y)) {
+        lck.lock();
         _empty_spot = false;
+        lck.unlock();
         }
     }
     if (_empty_spot){
+        lck.lock();
         food.x = x;
         food.y = y;
         std::cout << "Done placing food\n";
+        lck.unlock();
         return;
     }
   }
