@@ -7,7 +7,8 @@
 
 // Game::Game(std::size_t grid_width, std::size_t grid_height)
 // Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
-Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller)  // two-player
+// Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller)  // two-player
+Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, std::shared_ptr<Controller> const controller)
     // : snake(grid_width, grid_height),
     // : snake(grid_width, grid_height, grid_width / 2),  // two-player
       : engine(dev()),
@@ -48,7 +49,8 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Cont
     // }  // concurrency
 
     // controller.HandleInput(running, _players, this);
-    _controller.HandleInput(running, _players, this);
+    // _controller.HandleInput(running, _players, this);
+    _controller.get()->HandleInput(running, _players, this);
     /* For threading SDL_PollEvent:
     "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/
 
@@ -174,7 +176,7 @@ void Game::SetPlayers(int grid_width, int grid_height){
     float head_x = grid_width * (i+1) / (_nr_players + 1);
     // Snake snake(grid_width, grid_height, head_x);
     // Player player(i+1, snake);
-    Player player(i+1, grid_width, grid_height, head_x);
+    Player player(i+1, grid_width, grid_height, head_x, _controller);
     // Player player(i+1);
     _players.push_back(player);
   }

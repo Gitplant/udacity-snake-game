@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "controller.h"
 #include "game.h"
 #include "renderer.h"
@@ -30,7 +31,9 @@ int main() {
   int const nr_players = GetNrPlayers(); // two-player
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
-  Controller controller;
+  // Controller controller;
+  std::shared_ptr<Controller> controller = std::make_shared<Controller>();
+
   // Game game(kGridWidth, kGridHeight, nr_players);
   Game game(kGridWidth, kGridHeight, nr_players, controller);
   // game.Run(controller, renderer, kMsPerFrame);

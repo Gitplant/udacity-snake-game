@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <random>
+#include <memory>  // concurrency2
 #include "SDL.h"
 #include "controller.h"
 #include "player.h"  // player-class
@@ -12,7 +13,8 @@ class Game {
  public:
   // Game(std::size_t grid_width, std::size_t grid_height);
   // Game(std::size_t grid_width, std::size_t grid_height, int nr_players);  // two-player
-  Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller);  // two-player
+  // Game(std::size_t grid_width, std::size_t grid_height, int nr_players, Controller const &controller);  // two-player
+  Game(std::size_t grid_width, std::size_t grid_height, int nr_players, std::shared_ptr<Controller> const controller);  // two-player
   // void Run(Controller const &controller, Renderer &renderer,
   //          std::size_t target_frame_duration);
   void Run(Renderer &renderer, std::size_t target_frame_duration);
@@ -45,7 +47,8 @@ class Game {
   int const _nr_players; // two-player
   std::vector<Snake> _snakes;  //two-player
   std::vector<Player> _players;  // player-class
-  Controller _controller;  // concurrency2
+  // Controller _controller;  // concurrency2
+  std::shared_ptr<Controller> _controller; // concurrency2
 };
 
 #endif
