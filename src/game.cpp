@@ -146,6 +146,17 @@ void Game::PrintResults() const{
   for (const Player& player : _players){
     std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake->GetSize() << "  -  snake survived: " << Bool2Answer(player.snake->IsAlive()) << "\n";
   }
+  if (_nr_players > 1){
+    if (_players[0].GetScore() > _players[1].GetScore()){
+      std::cout << "Player 1 wins!" << std::endl;
+    }
+    else if (_players[0].GetScore() < _players[1].GetScore()){
+      std::cout << "Player 2 wins!" << std::endl;
+    }
+    else{
+      std::cout << "It's a tie!" << std::endl;
+    }
+  }
 }
 
 std::string Game::Bool2Answer(bool input) const{
