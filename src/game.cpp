@@ -31,7 +31,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, _players, this);
 
-    if (!_paused){
+    if (!_paused && !_finished){
       Update();
       }
 
@@ -92,26 +92,29 @@ void Game::PlaceFood() {
 }
 
 void Game::Update() {
-  for (const Player& player : _players){
-    if (!player.snake->IsAlive()) return;
-  }
+  bool any_alive = false;
   for (Player& player : _players){
-    player.snake->Update();
+    if (player.snake->IsAlive()){
+      any_alive = true;
+      player.snake->Update();
 
-    SDL_Point new_head_int = player.snake->GetHeadInt();
+      SDL_Point new_head_int = player.snake->GetHeadInt();
 
-
-    // Check if there's food over here
-    if (food.x == new_head_int.x && food.y == new_head_int.y) {
-      std::thread tIncreaseScore(&Player::IncreaseScore, &player);
-      std::thread tPlaceFood(&Game::PlaceFood, this);
-      // Grow snake and increase speed and score.
-      std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));
-      player.snake->IncreaseSpeed(0.02);
-      tIncreaseScore.join();
-      tPlaceFood.join();
-      tGrowBody.join();
+      // Check if there's food over here
+      if (food.x == new_head_int.x && food.y == new_head_int.y) {
+        std::thread tIncreaseScore(&Player::IncreaseScore, &player);
+        std::thread tPlaceFood(&Game::PlaceFood, this);
+        // Grow snake and increase speed and score.
+        std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));
+        player.snake->IncreaseSpeed(0.02);
+        tIncreaseScore.join();
+        tPlaceFood.join();
+        tGrowBody.join();
+      }
     }
+  }
+  if (!any_alive){
+    _finished = true;
   }
 }
 

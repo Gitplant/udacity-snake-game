@@ -31,6 +31,7 @@ class Game {
   bool _paused{false};
   int const _nr_players;
   std::vector<Player> _players;
+  bool _finished{false};
 };
 
 #endif
