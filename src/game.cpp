@@ -1,23 +1,20 @@
-#include "game.h"
-#include "controller.h" // concurrency
-#include "player.h"  // player-class
 #include <iostream>
-#include <thread>  // concurrency
-#include <mutex>  // concurrency3
+#include <mutex>
+#include <thread>
 #include "SDL.h"
+#include "controller.h"
+#include "game.h"
+#include "player.h"
 
-// Game::Game(std::size_t grid_width, std::size_t grid_height)
-Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)  // two-player
-    // : snake(grid_width, grid_height),
-    // : snake(grid_width, grid_height, grid_width / 2),  // two-player
-      : engine(dev()),
-      random_w(0, static_cast<int>(grid_width - 1)),
-      random_h(0, static_cast<int>(grid_height - 1)),
-      _nr_players(nr_players) {  // two-player
-  PlaceFood();
-  // SetSnakes(grid_width, grid_height);
-  SetPlayers(grid_width, grid_height);
-}
+Game::Game(std::size_t grid_width, std::size_t grid_height, int nr_players)
+  : engine(dev()),
+  random_w(0, static_cast<int>(grid_width - 1)),
+  random_h(0, static_cast<int>(grid_height - 1)),
+  _nr_players(nr_players)
+  {
+    PlaceFood();
+    SetPlayers(grid_width, grid_height);
+    }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
                std::size_t target_frame_duration) {
@@ -32,29 +29,13 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    // controller.HandleInput(running, snake);
-    // controller.HandleInput(running, this);  // pause-game
-
-    // Allow both players to give input at the same time
-    // if (_nr_players == 2){  // concurrency
-    //   // Use multi-threading
-    //   // std::thread t(Controller::HandleInputPlayer2, controller, running, this);  // concurrency
-    //   // std::thread t([&controller, &running, this]() {controller.HandleInputPlayer2(running, this);});  // concurrency
-    //   // std::cout << "Thread id = " << t.get_id() << std::endl;  // concurrency
-    //   // std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;  // concurrency
-    //   t.join();  // concurrency
-    // }  // concurrency
-
     controller.HandleInput(running, _players, this);
-    /* For threading SDL_PollEvent:
-    "As this function may implicitly call SDL_PumpEvents(), you can only call this function in the thread that set the video mode."*/
 
-    if (!_paused){  // pause-game
-    Update();
-    }  // pause-game
-    // renderer.Render(snake, food);
-    // renderer.Render(_snakes, food);  // two-player
-    renderer.Render(_players, food);  // player-class
+    if (!_paused){
+      Update();
+      }
+
+    renderer.Render(_players, food);
 
     frame_end = SDL_GetTicks();
 
@@ -65,7 +46,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      // renderer.UpdateWindowTitle(score, frame_count);
       renderer.UpdateWindowTitle(_players, frame_count);
       frame_count = 0;
       title_timestamp = frame_end;
@@ -86,18 +66,16 @@ void Game::PlaceFood() {
   std::unique_lock<std::mutex> lck(_mutex);
   lck.unlock();
 
-
   int x, y;
-  bool _empty_spot;  // two-player
+  bool _empty_spot;
   while (true) {
-    _empty_spot = true;  // two-player
+    _empty_spot = true;
     x = random_w(engine);
     y = random_h(engine);
     // Check that the location is not occupied by a snake item before placing
     // food.
-    for (Snake& snake : _snakes){  // two-player
-      // if (!snake.SnakeCell(x, y)) {
-      if (snake.SnakeCell(x, y)) {
+    for (const Player& player : _players){
+      if (player.snake->SnakeCell(x, y)) {
         lck.lock();
         _empty_spot = false;
         lck.unlock();
@@ -114,49 +92,29 @@ void Game::PlaceFood() {
 }
 
 void Game::Update() {
-  // for (Snake& snake : _snakes){  // two-player
-  for (const Player& player : _players){  // player-class
-    // if (!snake.alive) return;
+  for (const Player& player : _players){
     if (!player.snake->alive) return;
   }
-  for (Player& player : _players){  // player-class
+  for (Player& player : _players){
     player.snake->Update();
 
-    // int new_x = static_cast<int>(snake.head_x);
-    // int new_y = static_cast<int>(snake.head_y);
     int new_x = static_cast<int>(player.snake->head_x);
     int new_y = static_cast<int>(player.snake->head_y);
 
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y) {
-      // score++;
-      // player.IncreaseScore();
-      std::thread tIncreaseScore(&Player::IncreaseScore, &player);  // concurrency3
-      // PlaceFood();
-      std::thread tPlaceFood(&Game::PlaceFood, this);  // concurrency3
-      // Grow snake and increase speed.
-      // snake.GrowBody();
-      // snake.speed += 0.02;
-      std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));  // concurrency3
-      // player.snake.GrowBody();
+      std::thread tIncreaseScore(&Player::IncreaseScore, &player);
+      std::thread tPlaceFood(&Game::PlaceFood, this);
+      // Grow snake and increase speed and score.
+      std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));
       player.snake->speed += 0.02;
-      tIncreaseScore.join();  // concurrency3
+      tIncreaseScore.join();
       tPlaceFood.join();
       tGrowBody.join();
     }
-  }  // two-player
+  }
 }
 
-// int Game::GetScore() const { return score; }
-// int Game::GetSize() const { return snake.size; }
-
-// pause-game
-void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite) {
-  _snakes[player_nr - 1].ChangeDirection(input, opposite);
-  return;
-}
-
-// pause-game
 void Game::PauseGame(){
   if (_paused == true){
     _paused = false;
@@ -166,30 +124,15 @@ void Game::PauseGame(){
   }
 }
 
-// two-player
-// void Game::SetSnakes(int grid_width, int grid_height){
-//   for (int i = 0; i < _nr_players; i++)
-//   {
-//     float head_x = grid_width * (i+1) / (_nr_players + 1);
-//     Snake snake(grid_width, grid_height, head_x);
-//     _snakes.push_back(snake);
-//   }
-// }
-
-int Game::GetNrPlayers() const {  // two-player
+int Game::GetNrPlayers() const {
   return _nr_players;
-}  // two-player
+}
 
-// player-class
 void Game::SetPlayers(int grid_width, int grid_height){
   for (int i = 0; i < _nr_players; i++)
   {
     float head_x = grid_width * (i+1) / (_nr_players + 1);
-    // Snake snake(grid_width, grid_height, head_x);
-    // Player player(i+1, snake);
     Player player(i+1, grid_width, grid_height, head_x);
-    // Player player(i+1);
-    // _players.push_back(player);
     _players.emplace_back(std::move(player));
   }
 }
