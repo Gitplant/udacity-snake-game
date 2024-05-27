@@ -24,6 +24,7 @@ class Snake {
   SDL_FPoint GetHead() const {return _head;};
   SDL_Point GetHeadInt() const;
   std::vector<SDL_Point> GetBody() const {return _body;};
+  bool HasMoved() const {return _has_moved;};
 
   // Methods
   void Update();
@@ -48,6 +49,7 @@ class Snake {
   Direction _direction = Direction::kUp;
   bool _growing{false};
   bool _alive{true};
+  bool _has_moved{false};
 
 
 };

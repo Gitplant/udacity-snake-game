@@ -98,6 +98,18 @@ void Game::Update() {
       any_alive = true;
       player.snake->Update();
 
+      // Kill snake if it has collided with any snake
+      if (player.snake->HasMoved()){
+        SDL_Point current_head = player.snake->GetHeadInt();
+        for (Player& player2 : _players){
+          for (auto const &item : player2.snake->GetBody()){
+            if (current_head.x == item.x && current_head.y == item.y){
+              player.snake->KillSnake();
+            }
+          }
+        }
+      }
+
       SDL_Point new_head_int = player.snake->GetHeadInt();
 
       // Check if there's food over here

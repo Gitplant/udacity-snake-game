@@ -12,18 +12,19 @@ _head({head_x, static_cast<float>(grid_height) / 2}) {;
 }
 
 void Snake::Update() {
-  SDL_Point prev_cell{
-      static_cast<int>(_head.x),
-      static_cast<int>(_head.y)};  // We first capture the head's cell before updating.
+
+  SDL_Point prev_cell = GetHeadInt();  // We first capture the head's cell before updating.
   UpdateHead();
-  SDL_Point current_cell{
-      static_cast<int>(_head.x),
-      static_cast<int>(_head.y)};  // Capture the head's cell after updating.
+  SDL_Point current_cell = GetHeadInt();  // Capture the head's cell after updating.
 
   // Update all of the body vector items if the snake head has moved to a new
   // cell.
   if (current_cell.x != prev_cell.x || current_cell.y != prev_cell.y) {
+    _has_moved = true;
     UpdateBody(current_cell, prev_cell);
+  }
+  else{
+    _has_moved = false;
   }
 }
 
@@ -61,13 +62,6 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
   } else {
     _growing = false;
     _size++;
-  }
-
-  // Check if the snake has died.
-  for (auto const &item : _body) {
-    if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
-      KillSnake();
-    }
   }
 }
 
