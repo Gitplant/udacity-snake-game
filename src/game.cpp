@@ -143,6 +143,7 @@ int Game::GetNrPlayers() const {
   return _nr_players;
 }
 
+// Initialize the _players attribute
 void Game::SetPlayers(int grid_width, int grid_height){
   for (int i = 0; i < _nr_players; i++)
   {
@@ -152,7 +153,7 @@ void Game::SetPlayers(int grid_width, int grid_height){
   }
 }
 
-// clean-up
+// Print the results of the game to ther terminal
 void Game::PrintResults() const{
 
   for (const Player& player : _players){
@@ -171,6 +172,7 @@ void Game::PrintResults() const{
   }
 }
 
+// Convert a boolean to a string "yes" or "no"
 std::string Game::Bool2Answer(bool input) const{
   if (input){
     return "yes";
