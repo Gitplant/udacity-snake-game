@@ -1,7 +1,7 @@
-#include "renderer.h"
 #include <iostream>
 #include <string>
-#include "player.h"  // player-class
+#include "player.h"
+#include "renderer.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -39,9 +39,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-// void Renderer::Render(Snake const snake, SDL_Point const &food) {
-// void Renderer::Render(std::vector<Snake> const snakes, SDL_Point const &food) {  // two-player
-void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food) {  // two-player, player-class
+void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -56,46 +54,37 @@ void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food)
   block.y = food.y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // for(Snake snake : snakes){  // two-player
   Color color;
-  for(const Player& player : players){  // two-player, player-class
+  for(const Player& player : players){
     // Render snake's body
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    // for (SDL_Point const &point : snake.body) {
       for (SDL_Point const &point : player.snake->GetBody()) {
       block.x = point.x * block.w;
       block.y = point.y * block.h;
       SDL_RenderFillRect(sdl_renderer, &block);
     }
 
-    // Render snake's head
-    // block.x = static_cast<int>(snake.head_x) * block.w;
-    // block.y = static_cast<int>(snake.head_y) * block.h;
-    // if (snake.alive) {
     block.x = static_cast<int>(player.snake->GetHeadX()) * block.w;
     block.y = static_cast<int>(player.snake->GetHeadY()) * block.h;
     if (player.snake->IsAlive()) {
 
-      // SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
       color = player.snake->GetColor();
       SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
     } else {
       SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
     }
     SDL_RenderFillRect(sdl_renderer, &block);
-  }  // two-player
+  }
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
 
-// void Renderer::UpdateWindowTitle(int score, int fps) {
 void Renderer::UpdateWindowTitle(std::vector<Player> &players, int fps) const {
   std::string title;
   for (const Player &player: players){  // player-class
     title += "Player " + std::to_string(player.GetPlayerId()) + ": " + std::to_string(player.GetScore()) + "   ";
   }
   title += "FPS: " + std::to_string(fps);
-  // std::string title{"Player Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
