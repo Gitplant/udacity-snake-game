@@ -3,7 +3,7 @@
 #include "game.h"
 #include "renderer.h"
 
-// two-player
+// Ask the user how many players are playing (either 1 or 2).
 int GetNrPlayers(){
   int nr_players;
   std::cout << "Are you playing with 1 or 2 players? [1/2]" << std::endl;
@@ -27,7 +27,7 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  int const nr_players = GetNrPlayers(); // two-player
+  int const nr_players = GetNrPlayers();
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
@@ -35,7 +35,5 @@ int main() {
   game.Run(controller, renderer, kMsPerFrame);
   std::cout << "Game has terminated successfully!\n";
   game.PrintResults();
-  // std::cout << "Score: " << game.GetScore() << "\n";
-  // std::cout << "Size: " << game.GetSize() << "\n";
   return 0;
 }
