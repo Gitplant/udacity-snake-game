@@ -64,8 +64,8 @@ void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food)
       SDL_RenderFillRect(sdl_renderer, &block);
     }
 
-    block.x = static_cast<int>(player.snake->GetHeadX()) * block.w;
-    block.y = static_cast<int>(player.snake->GetHeadY()) * block.h;
+    block.x = static_cast<int>(player.snake->GetHead().x) * block.w;
+    block.y = static_cast<int>(player.snake->GetHead().y) * block.h;
     if (player.snake->IsAlive()) {
 
       color = player.snake->GetColor();

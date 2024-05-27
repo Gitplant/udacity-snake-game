@@ -1,14 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "snake.h"
-#include "controller.h"
 #include <memory>  // std::shared_ptr
+#include "controller.h"
+#include "snake.h"
 
 
 class Player{
 
-    public:
+  public:
     Player(int&& player_id, int grid_width, int grid_height, float head_x);
 
     void SetPlayerId(int id);
@@ -16,7 +16,8 @@ class Player{
     void UpdateScore(int score);
     int GetScore() const {return _score;};
     void IncreaseScore();
-    // Snake snake;
+    bool CellIsOccupied(int x, int y) const;
+
     std::unique_ptr<Snake> snake;
 
     // Rule of five:
@@ -27,10 +28,9 @@ class Player{
     Player& operator=(Player&& other) noexcept;
 
 
-    private:
-        // Controller _controller;
-        int const _player_id;
-        int _score;
+  private:
+    int const _player_id;
+    int _score;
 
 };
 

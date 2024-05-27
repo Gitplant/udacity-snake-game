@@ -21,10 +21,11 @@ class Snake {
   Color GetColor() const {return _color;};
   int GetSize() const {return _size;};
   bool IsAlive() const {return _alive;};
-  float GetHeadX() const {return _head_x;};
-  float GetHeadY() const {return _head_y;};
+  SDL_FPoint GetHead() const {return _head;};
+  SDL_Point GetHeadInt() const;
   std::vector<SDL_Point> GetBody() const {return _body;};
 
+  // Methods
   void Update();
   void GrowBody();
   bool SnakeCell(int x, int y);
@@ -32,24 +33,22 @@ class Snake {
   void PrintDirection(Snake::Direction direction) const;
   void KillSnake(){_alive = false;};
   void IncreaseSpeed(float speed_increase){_speed += speed_increase;};
+  void UpdateHead();
+  void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
  private:
   Color const _color;
   int const _grid_width;
   int const _grid_height;
-
   float _speed{0.1f};
   int _size{1};
-  float _head_x;
-  float _head_y;
+  SDL_FPoint _head;
   std::vector<SDL_Point> _body;
 
   Direction _direction = Direction::kUp;
   bool _growing{false};
   bool _alive{true};
 
-  void UpdateHead();
-  void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
 };
 

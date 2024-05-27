@@ -8,18 +8,17 @@ Snake::Snake(int grid_width, int grid_height, float head_x, Color color) :
 _grid_width(grid_width),
 _grid_height(grid_height),
 _color(color),
-_head_x(head_x),
-_head_y(grid_height / 2) {}
+_head({head_x, static_cast<float>(grid_height) / 2}) {;
+}
 
 void Snake::Update() {
   SDL_Point prev_cell{
-      static_cast<int>(_head_x),
-      static_cast<int>(
-          _head_y)};  // We first capture the head's cell before updating.
+      static_cast<int>(_head.x),
+      static_cast<int>(_head.y)};  // We first capture the head's cell before updating.
   UpdateHead();
   SDL_Point current_cell{
-      static_cast<int>(_head_x),
-      static_cast<int>(_head_y)};  // Capture the head's cell after updating.
+      static_cast<int>(_head.x),
+      static_cast<int>(_head.y)};  // Capture the head's cell after updating.
 
   // Update all of the body vector items if the snake head has moved to a new
   // cell.
@@ -31,25 +30,25 @@ void Snake::Update() {
 void Snake::UpdateHead() {
   switch (_direction) {
     case Direction::kUp:
-      _head_y -= _speed;
+      _head.y -= _speed;
       break;
 
     case Direction::kDown:
-      _head_y += _speed;
+      _head.y += _speed;
       break;
 
     case Direction::kLeft:
-      _head_x -= _speed;
+      _head.x -= _speed;
       break;
 
     case Direction::kRight:
-      _head_x += _speed;
+      _head.x += _speed;
       break;
   }
 
   // Wrap the Snake around to the beginning if going off of the screen.
-  _head_x = fmod(_head_x + _grid_width, _grid_width);
-  _head_y = fmod(_head_y + _grid_height, _grid_height);
+  _head.x = fmod(_head.x + _grid_width, _grid_width);
+  _head.y = fmod(_head.y + _grid_height, _grid_height);
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
@@ -79,7 +78,7 @@ void Snake::GrowBody() {
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y) {
-  if (x == static_cast<int>(_head_x) && y == static_cast<int>(_head_y)) {
+  if (x == static_cast<int>(_head.x) && y == static_cast<int>(_head.y)) {
     return true;
   }
   for (auto const &item : _body) {
@@ -93,6 +92,13 @@ bool Snake::SnakeCell(int x, int y) {
 // Change the snake's direction based on the input.
 void Snake::ChangeDirection(Snake::Direction input, Snake::Direction opposite){
   if (_direction != opposite || GetSize() == 1) _direction = input;
+}
+
+SDL_Point Snake::GetHeadInt() const {
+  SDL_Point head;
+  head.x = static_cast<int>(_head.x);
+  head.y = static_cast<int>(_head.y);
+  return head;
 }
 
 // Helper function to print the snake's direction (for debugging).

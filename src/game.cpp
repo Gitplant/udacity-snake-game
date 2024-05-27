@@ -75,18 +75,18 @@ void Game::PlaceFood() {
     // Check that the location is not occupied by a snake item before placing
     // food.
     for (const Player& player : _players){
-      if (player.snake->SnakeCell(x, y)) {
+      if (player.CellIsOccupied(x, y)) {
         lck.lock();
         _empty_spot = false;
         lck.unlock();
-        }
+      }
     }
     if (_empty_spot){
-        lck.lock();
-        food.x = x;
-        food.y = y;
-        lck.unlock();
-        return;
+      lck.lock();
+      food.x = x;
+      food.y = y;
+      lck.unlock();
+      return;
     }
   }
 }
@@ -98,16 +98,15 @@ void Game::Update() {
   for (Player& player : _players){
     player.snake->Update();
 
-    int new_x = static_cast<int>(player.snake->GetHeadX());
-    int new_y = static_cast<int>(player.snake->GetHeadY());
+    SDL_Point new_head_int = player.snake->GetHeadInt();
+
 
     // Check if there's food over here
-    if (food.x == new_x && food.y == new_y) {
+    if (food.x == new_head_int.x && food.y == new_head_int.y) {
       std::thread tIncreaseScore(&Player::IncreaseScore, &player);
       std::thread tPlaceFood(&Game::PlaceFood, this);
       // Grow snake and increase speed and score.
       std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));
-      // player.snake->_speed += 0.02;
       player.snake->IncreaseSpeed(0.02);
       tIncreaseScore.join();
       tPlaceFood.join();
