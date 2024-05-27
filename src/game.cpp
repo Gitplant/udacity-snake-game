@@ -98,8 +98,8 @@ void Game::Update() {
   for (Player& player : _players){
     player.snake->Update();
 
-    int new_x = static_cast<int>(player.snake->head_x);
-    int new_y = static_cast<int>(player.snake->head_y);
+    int new_x = static_cast<int>(player.snake->GetHeadX());
+    int new_y = static_cast<int>(player.snake->GetHeadY());
 
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y) {
@@ -107,7 +107,8 @@ void Game::Update() {
       std::thread tPlaceFood(&Game::PlaceFood, this);
       // Grow snake and increase speed and score.
       std::thread tGrowBody(&Snake::GrowBody, std::ref(*player.snake));
-      player.snake->speed += 0.02;
+      // player.snake->_speed += 0.02;
+      player.snake->IncreaseSpeed(0.02);
       tIncreaseScore.join();
       tPlaceFood.join();
       tGrowBody.join();

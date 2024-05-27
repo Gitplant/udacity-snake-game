@@ -13,43 +13,44 @@ struct Color{
 
 class Snake {
  public:
+  Snake(int grid_width, int grid_height, float head_x, Color color = Color{255, 255, 255, 255});
+
   enum class Direction { kUp, kDown, kLeft, kRight };
 
-  // Snake(int grid_width, int grid_height)
-  Snake(int grid_width, int grid_height, float head_x, Color color = Color{255, 255, 255, 255});  // two-player
+  // Getters
+  Color GetColor() const {return _color;};
+  int GetSize() const {return _size;};
+  bool IsAlive() const {return _alive;};
+  float GetHeadX() const {return _head_x;};
+  float GetHeadY() const {return _head_y;};
+  std::vector<SDL_Point> GetBody() const {return _body;};
 
   void Update();
-
   void GrowBody();
   bool SnakeCell(int x, int y);
-
-  Direction direction = Direction::kUp;
-
-  float speed{0.1f};
-  int size{1};
-  float head_x;
-  float head_y;
-  std::vector<SDL_Point> body;
-
-  void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
-  void PrintDirection(Snake::Direction direction) const; // two-player
-  int GetSize() const {return size;};
+  void ChangeDirection(Snake::Direction input, Snake::Direction opposite);
+  void PrintDirection(Snake::Direction direction) const;
   void KillSnake(){_alive = false;};
-  bool IsAlive() const {return _alive;};
-
-  Color color;
-
-  // Snake(const Snake&);  // temp
+  void IncreaseSpeed(float speed_increase){_speed += speed_increase;};
 
  private:
+  Color const _color;
+  int const _grid_width;
+  int const _grid_height;
+
+  float _speed{0.1f};
+  int _size{1};
+  float _head_x;
+  float _head_y;
+  std::vector<SDL_Point> _body;
+
+  Direction _direction = Direction::kUp;
+  bool _growing{false};
+  bool _alive{true};
+
   void UpdateHead();
   void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
-  bool growing{false};
-  int const grid_width;
-  int const grid_height;
-
-  bool _alive{true};
 };
 
 #endif
