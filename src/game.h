@@ -17,6 +17,7 @@ class Game {
   int GetNrPlayers() const;
   void SetPlayers(int grid_width, int grid_height);
   void PrintResults() const;
+  std::string Bool2Answer(bool input) const;
 
  private:
   SDL_Point food;

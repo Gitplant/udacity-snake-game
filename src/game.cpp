@@ -93,7 +93,7 @@ void Game::PlaceFood() {
 
 void Game::Update() {
   for (const Player& player : _players){
-    if (!player.snake->alive) return;
+    if (!player.snake->IsAlive()) return;
   }
   for (Player& player : _players){
     player.snake->Update();
@@ -141,6 +141,15 @@ void Game::SetPlayers(int grid_width, int grid_height){
 void Game::PrintResults() const{
 
   for (const Player& player : _players){
-    std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake->GetSize() << "\n";
+    std::cout << "Player " << player.GetPlayerId() << "  -  score: " << player.GetScore() << "  -  snake length: " << player.snake->GetSize() << "  -  snake survived: " << Bool2Answer(player.snake->IsAlive()) << "\n";
+  }
+}
+
+std::string Game::Bool2Answer(bool input) const{
+  if (input){
+    return "yes";
+  }
+  else{
+    return "no";
   }
 }

@@ -27,7 +27,6 @@ class Snake {
 
   float speed{0.1f};
   int size{1};
-  bool alive{true};
   float head_x;
   float head_y;
   std::vector<SDL_Point> body;
@@ -35,6 +34,8 @@ class Snake {
   void ChangeDirection(Snake::Direction input, Snake::Direction opposite);  // pause-game
   void PrintDirection(Snake::Direction direction) const; // two-player
   int GetSize() const {return size;};
+  void KillSnake(){_alive = false;};
+  bool IsAlive() const {return _alive;};
 
   Color color;
 
@@ -47,6 +48,8 @@ class Snake {
   bool growing{false};
   int const grid_width;
   int const grid_height;
+
+  bool _alive{true};
 };
 
 #endif
