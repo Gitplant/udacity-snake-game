@@ -23,22 +23,6 @@ void Player::IncreaseScore(){
 // Destructor
 Player::~Player() {};
 
-// // Copy constructor
-// Player::Player(const Player& other) : _player_id(other._player_id), _score(other._score){
-//     snake = std::make_unique<Snake>(*other.snake);
-//     std::cout << "  -------------------------   Player copy constructor called." << std::endl;
-// }
-
-// Copy assignment operator
-// Player& Player::operator=(const Player& other) {
-//     std::cout << "  -------------------------   Player copy assignment operator called." << std::endl;
-//     if (this != &other) {
-//         snake = std::make_unique<Snake>(*other.snake);
-//         _score = other._score;
-//     }
-//     return *this;
-// }
-
 // Move constructor
 Player::Player(Player&& other) noexcept : _player_id(std::move(other._player_id)), _score(std::move(other._score)){
     snake = std::move(other.snake);

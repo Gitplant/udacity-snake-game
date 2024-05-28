@@ -42,26 +42,16 @@ This work is licensed under a
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
 ## New features
+The following features were added as part of the assignment:
 1. **Pause:** The game will pause when the space-bar is pressed and unpause when the space bar is pressed again. <br>
-Involved code changes:<br>
-    *  The method `Controller::HandleInput`:<br>
-        a. now takes `Game* game` as an input instead of `Snake &snake`.<br>
-        b. calls `game->PauseGame()` when space bar is pressed. <br>
-    *  The method `Controller::ChangeDirection(Snake &snake, Snake::Direction input, Snake::Direction opposite)` is moved to the `Game` class and renamed `Game::ChangeSnakeDirection(Snake::Direction input, Snake::Direction opposite)`.
-    *  A new function `void ChangeDirection(Snake::Direction input, Snake::Direction opposite)` is added to the `Snake` class.
-    *  The method `Game::PauseGame()` sets the attribute `_paused` to either `true` or `false`.
-    *  `Game::Run` won't call `Update()` if `_paused` is false.
 2. **Two-player mode** Optionally play the game with two players. <br>
-Involved code changes:<br>
-    * Get the number of players from the user:<br>
-      a. The function `GetNrPlayers()` is defined in main, which asks the user to enter the number of players and returns an `int` accordingly.<br>
-      b. Inside `main()`, the `nr_players` is set.
-    * The `Game` constructor also takes and sets the number of players.
-    * A getter for `_nr_players` (`GetNrPlayers()`) is defined in the `Game` class.
-    * Inside `Controller::HandleInput`, the direction of the second snake is updated using the WASD keys.
-    * A `SetSnakes` method is created inside `Game` that will initialize a vector of snakes called `_snakes`. In case of two snakes, their start positions are on 1/3 and 2/3 of the width of the screen, so that they won't overlap.
-    * In `Game::Run` all snakes are rendered and updated.
-    * A helper function for printing the snake's direction (`Snake::PrintDirection`) was introduced.
+  a. Ask the user if they are playing with 1 or 2 players <br>
+  b. In case of 2 players:
+    - Player 2 uses the WASD keys
+    - The snake will die if it collides either with its own or the other snake's body
+    - The game continues untill all snakes have died
+    - The player with the highest score wins (regardless of how long the snake survived).
+    - The score and winner are printed to the screen
 
 ## Rubric criteria that were met
 
@@ -69,8 +59,8 @@ Involved code changes:<br>
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
 |A README with instructions is included with the project |The README is included with the project and has instructions for building/running the project. <br> If any additional libraries are needed to run the project, these are indicated with cross-platform installation instructions. <br> You can submit your writeup as markdown or pdf. | This markdown README is provided. |
-|The README indicates the new features you added to the game. | The README indicates the new features you added to the game, along with the expected behavior or output of the program. ||
-|The README includes information about each rubric point addressed. | The README indicates which rubric points are addressed. The README also indicates where in the code (i.e. files and line numbers) that the rubric points are addressed.| This is done in this section "Rubric criteria that were met"|
+|The README indicates the new features you added to the game. | The README indicates the new features you added to the game, along with the expected behavior or output of the program. | See the section "_New features_"|
+|The README includes information about each rubric point addressed. | The README indicates which rubric points are addressed. The README also indicates where in the code (i.e. files and line numbers) that the rubric points are addressed.| This is done in the current section "_Rubric criteria that were met_"|
 
 ## Compiling and Testing (All Rubric Points REQUIRED)
 |Criteria|	Submission Requirements| Implementation|
@@ -80,36 +70,36 @@ Involved code changes:<br>
 ## Object Oriented Programming - meet at least 3 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-| One or more classes are added to the project with appropriate access specifiers for class members. | Classes are organized with attributes to hold data and methods to perform tasks. <br> All class data members are explicitly specified as public, protected, or private. <br> Member data that is subject to an invariant is hidden from the user and accessed via member methods. |The class `Player` was added to the project.|
-| Class constructors utilize member initialization lists. | All class members that are set to argument values are initialized through member initialization lists.||
-|Classes abstract implementation details from their interfaces. | All class member functions document their effects, either through function names, comments, or formal documentation. <br> Member functions do not change the program state in undocumented ways. ||
-| Overloaded functions allow the same function to operate on different parameters. | One function is overloaded with different signatures for the same function name.||
-| Classes follow an appropriate inheritance hierarchy with virtual and override functions. | Inheritance hierarchies are logical. One member function in an inherited class overrides a virtual base class member function. ||
-|Templates generalize functions or classes in the project. | One function or class is declared with a template that allows it to accept a generic parameter.||
+| One or more classes are added to the project with appropriate access specifiers for class members. | Classes are organized with attributes to hold data and methods to perform tasks. <br> All class data members are explicitly specified as public, protected, or private. <br> Member data that is subject to an invariant is hidden from the user and accessed via member methods. |The class `Player` was added to the project. The attributes `_player_id` and `_score` are specified as private with the required getters and setters. The `_player_id` is also `const`. The attribute `snake` is public so that it can be accessed from within `controller`, `game` and `renderer`.|
+| Class constructors utilize member initialization lists. | All class members that are set to argument values are initialized through member initialization lists.| The constructors of the `Game`, `Renderer`, `Snake` and `Player` class use initialization lists. The `Render` class uses the default constructor.|
+|Classes abstract implementation details from their interfaces. | All class member functions document their effects, either through function names, comments, or formal documentation. <br> Member functions do not change the program state in undocumented ways. | All class member functions have names that describe their effect. In cases where this was considered insufficient, an extra comment was added.|
+| Overloaded functions allow the same function to operate on different parameters. | One function is overloaded with different signatures for the same function name.| N/A|
+| Classes follow an appropriate inheritance hierarchy with virtual and override functions. | Inheritance hierarchies are logical. One member function in an inherited class overrides a virtual base class member function. | N/A|
+|Templates generalize functions or classes in the project. | One function or class is declared with a template that allows it to accept a generic parameter.| N/A|
 
 ## Memory Management - meet at least 3 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-| The project makes use of references in function declarations. | At least two variables are defined as references, or two functions use pass-by-reference in the project code. |1. In `void Game::ChangeSnakeDirection(int&& player_nr, Snake::Direction input, Snake::Direction opposite)`, the `player_nr` is passed as an r-value reference.|
-|The project uses destructors appropriately. | At least one class that uses unmanaged dynamically allocated memory, along with any class that otherwise needs to modify state upon the termination of an object, uses a destructor. ||
+| The project makes use of references in function declarations. | At least two variables are defined as references, or two functions use pass-by-reference in the project code. | The following functions use pass-by-reference: <br> 1. `void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration)` <br> 2. `void Renderer::Render(std::vector<Player> const &players, SDL_Point const &food)` <br> 3. `void Renderer::UpdateWindowTitle(std::vector<Player> &players, int fps) const` <br> 4. `void Snake::UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell)` <br> 5. `void Controller::HandleInput(bool &running, std::vector<Player> &players, Game* game) const` <br> 6. `Player(int&& player_id, int grid_width, int grid_height, float head_x)` <br> 7. `Player(const Player& other)` <br> 8. `Player& operator=(const Player& other)` <br> 9. `Player(Player&& other)` <br> 10. `Player& operator=(Player&& other)`|
+|The project uses destructors appropriately. | At least one class that uses unmanaged dynamically allocated memory, along with any class that otherwise needs to modify state upon the termination of an object, uses a destructor. |N/a|
 | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | The project follows the Resource Acquisition Is Initialization pattern where appropriate, by allocating objects at compile-time, initializing objects when they are declared, and utilizing scope to ensure their automatic destruction. ||
 | The project follows the Rule of 5. | For all classes, if any one of the copy constructor, copy assignment operator, move constructor, move assignment operator, and destructor are defined, then all of these functions are defined. | The class `Player` has the rule of five implemented. Copying an instance of `Player` is not allowed in this implementation.|
-| The project uses move semantics to move data instead of copying it, where possible. | The project relies on the move semantics, instead of copying the object. ||
+| The project uses move semantics to move data instead of copying it, where possible. | The project relies on the move semantics, instead of copying the object. | An object of class `Player` cannot by copied by definition and is moved at several places in the code. Also objects of class `Snake` are being moved around, for example in the move constructor and the move assignment operator of the `Player` class. |
 | The project uses smart pointers instead of raw pointers. | The project uses at least one smart pointer: `unique_ptr`, `shared_ptr`, or `weak_ptr`. | The `snake` attribute of the `Player` class is a unique pointer.|
 
 
 ### Loops, Functions, I/O - meet at least 2 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
-|The project demonstrates an understanding of C++ functions and control structures. | A variety of control structures are added to the project. <br> The project code is clearly organized into functions.||
-|The project reads data from a file and process the data, or the program writes data to a file.| The project reads data from an external file or writes data to a file as part of the necessary operation of the program.||
+|The project demonstrates an understanding of C++ functions and control structures. | A variety of control structures are added to the project. <br> The project code is clearly organized into functions.| The code contains conditional statements, loops and clearly organized functions. For example in `Game::Update`: <br> 1. A for-loop is started to loop over all players <br> 2. An if-statement checks if that player's snake is still alive <br> 3. Another if-statement checks if that player's snake has moved to a new block <br> 4. A nested for-loop is started to loop over all players again <br> 5. Another nested for-loop loops over all body-elements of the player's snake <br> 6. An if-statement is used to check if the head of the first snake collides with a body element of either of the snakes.|
+|The project reads data from a file and process the data, or the program writes data to a file.| The project reads data from an external file or writes data to a file as part of the necessary operation of the program.| N/a |
 |The project accepts user input and processes the input.|	In addition to controlling the snake, the game can also receive new types of input from the player. | 1. The game will pause when the user presses the space-bar. <br> 2. The user is prompted to enter the number of players (1 or 2).|
-|The project uses data structures and immutable variables.|The project uses arrays or vectors and uses constant variables.|The attribute `_nr_players` of class `Game` is defined as a const.|
+|The project uses data structures and immutable variables.|The project uses arrays or vectors and uses constant variables.|The project uses vectors (`_players`, `player_colors`, and `_body`) and a struct (`Color`).  The project also defines several variables as const (`_nr_players`, `_player_id`, `_color`).|
 
 ### Concurrency - meet at least 2 criteria
 |Criteria|	Submission Requirements| Implementation|
 |--------|---------------|----------|
 |The project uses multithreading.| The project uses multiple threads or async tasks in the execution.| The project uses threads when increasing the score, placing food and growing the body in `Game::Update`.|
-|  promise and future is used in the project. | A promise and future is used to pass data from a worker thread to a parent thread in the project code. ||
+|  promise and future is used in the project. | A promise and future is used to pass data from a worker thread to a parent thread in the project code. | N/a |
 |A mutex or lock is used in the project. | A mutex or lock (e.g. `std::lock_guard` or `std::unique_lock`) is used to protect data that is shared across multiple threads in the project code. |Mutexes and locks are used in: <br> * `Game::PlaceFood` (`std::unique_lock`) <br> * `Snake::GrowBody` <br> * `Player::IncreaseScore`|
-| A condition variable is used in the project. | A `std::condition_variable`` is used in the project code to synchronize thread execution. ||
+| A condition variable is used in the project. | A `std::condition_variable`` is used in the project code to synchronize thread execution. | N/a |
